@@ -5,7 +5,7 @@ import { generatorCommentsList } from "../../utils/comments-list";
 import Spinner from '../../components/spinner';
 import useInit from '../../hooks/use-init';
 import CommentsList from '../../components/comments-list'
-import CommentLogIn from "../../components/comment-log-in";
+import MessagetoLogIn from "../../components/message-to-log-in";
 import useSelector from "../../hooks/use-selector";
 import CommentForm from "../../components/comment-form";
 import { useDispatch as useDispatchRedux, useSelector as useSelectorRedux } from 'react-redux';
@@ -15,7 +15,7 @@ function CommentsLayout({ articleId }) {
 
   const exists = useSelector(state => state.session.exists);
 
-  const [openLogInText, setOpenLogInText] = useState('false');
+  const [openMessagetoLogIn, setOpenMessagetoLogIn] = useState('false');
   const [openFormComment, setOpenFormComment] = useState('false');
 
   const dispatch = useDispatchRedux();
@@ -32,7 +32,7 @@ function CommentsLayout({ articleId }) {
   // console.log(select.comments);
 
   const onChangeLogInText = (e) => {
-    setOpenLogInText(e.target.value);
+    setOpenMessagetoLogIn(e.target.value);
   }
 
   const onChangeOpenFormComment = (e) => {
@@ -48,7 +48,7 @@ function CommentsLayout({ articleId }) {
     }
   }
 
-  const newCommentsList = generatorCommentsList(select.comments, articleId)
+  const commentsList = generatorCommentsList(select.comments, articleId)
     .map(item => {
       return item.map((item2, i) => {
         return (
@@ -59,7 +59,7 @@ function CommentsLayout({ articleId }) {
             date={item2.dateCreate}
             text={item2.text}
             indent={((i + 1) * 30) + 10}
-            openLogInText={openLogInText}
+            openMessagetoLogIn={openMessagetoLogIn}
             onChangeLogInText={onChangeLogInText}
             exists={exists}
             onChangeOpenFormComment={onChangeOpenFormComment}
@@ -75,11 +75,11 @@ function CommentsLayout({ articleId }) {
       <CommentsList
         count={select.comments.length}
       >
-        {newCommentsList.map(item => item)}
+        {commentsList.map(item => item)}
         {
-          openLogInText === 'false' ? <CommentLogIn
+          openMessagetoLogIn === 'false' ? <MessagetoLogIn
             exists={exists}
-            type={openLogInText} /> : null
+            type={openMessagetoLogIn} /> : null
         }
         {
           openFormComment === 'false' ? <CommentForm

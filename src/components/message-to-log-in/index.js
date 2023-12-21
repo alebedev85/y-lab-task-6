@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import './style.css';
 
 
-function CommentLogIn({exists, type, onChangeLogInText}) {
+function MessagetoLogIn({exists, type, onChangeLogInText}) {
   const cn = bem('CommentLogIn');
 
   return (
@@ -21,11 +21,11 @@ function CommentLogIn({exists, type, onChangeLogInText}) {
   )
 }
 
-CommentLogIn.propTypes = {
+MessagetoLogIn.propTypes = {
   exists: PropTypes.bool,
   type: PropTypes.string,
   onChangeLogInText: PropTypes.func,
 
 };
 
-export default memo(CommentLogIn);
+export default memo(MessagetoLogIn);

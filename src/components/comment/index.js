@@ -1,21 +1,21 @@
 import { memo } from "react";
 import PropTypes from 'prop-types';
-import CommentLogIn from "../comment-log-in";
+import CommentLogIn from "../message-to-log-in";
 import { cn as bem } from '@bem-react/classname';
 import './style.css';
 import CommentForm from "../comment-form";
 
-function Comment({ user, date, text, indent, id, openLogInText, onChangeLogInText, exists, onChangeOpenFormComment, openFormComment, hand2 }) {
+function Comment({ user, date, text, indent, id, openMessagetoLogIn, onChangeLogInText, exists, onChangeOpenFormComment, openFormComment, hand2 }) {
   const cn = bem('Comment');
 
-  const dataDate = new Date(date)
+  const newDate = new Date(date)
 
-  const changeDate = {
-    date: dataDate.getDate(),
-    month: dataDate.toLocaleString('default', { month: 'long' }),
-    year: dataDate.getFullYear(),
-    hours: dataDate.getHours(),
-    minutes: dataDate.getMinutes()
+  const commentDate = {
+    date: newDate.getDate(),
+    month: newDate.toLocaleString('default', { month: 'long' }),
+    year: newDate.getFullYear(),
+    hours: newDate.getHours(),
+    minutes: newDate.getMinutes()
   }
 
   const onChangeHandler = (e) => {
@@ -30,13 +30,13 @@ function Comment({ user, date, text, indent, id, openLogInText, onChangeLogInTex
           <p className={cn('user')}>{user}</p>
           <p className={cn('date')}>
             {
-              `${changeDate.date} ${changeDate.month} ${changeDate.year} в ${changeDate.hours}:${changeDate.minutes}`
+              `${commentDate.date} ${commentDate.month} ${commentDate.year} в ${commentDate.hours}:${commentDate.minutes}`
             }
           </p>
         </div>
         <p className={cn('text')}>{text}</p>
         <button value={id} className={cn('button')} type='button' onClick={onChangeHandler}>Ответить</button>
-        {openLogInText === id ? <CommentLogIn exists={exists} onChangeLogInText={onChangeLogInText} /> : null}
+        {openMessagetoLogIn === id ? <CommentLogIn exists={exists} onChangeLogInText={onChangeLogInText} /> : null}
         {openFormComment === id ?
           <CommentForm
             title={'Новый ответ'}
@@ -60,7 +60,7 @@ Comment.propTypes = {
   id: PropTypes.string,
   onChangeLogInText: PropTypes.func,
   exists: PropTypes.bool,
-  openLogInText: PropTypes.string
+  openMessagetoLogIn: PropTypes.string
 };
 
 export default memo(Comment);
