@@ -1,40 +1,49 @@
 import { memo, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
-import {cn as bem} from '@bem-react/classname';
+import { cn as bem } from '@bem-react/classname';
 import './style.css';
 
-function CommentForm({title, exists, type = false, onChangeOpenFormComment, commentId, handleSubmit}) {
+function CommentForm({
+  title,
+  exists,
+  type,
+  onChangeOpenFormComment,
+  commentId,
+  handleSubmit,
+  placeholder
+}) {
 
   const cn = bem('CommentForm');
 
-  const [valueArea, setValueArea] = useState('');
+  const [comment, setComment] = useState('');
 
-  const [reqParams, setReqParams] = useState();
+  const [commentData, setCommentData] = useState();
 
   useEffect(() => {
-    setReqParams(state => ({...state, text: valueArea, parent: {_id: commentId, _type: "comment"}}))
-  }, [type, valueArea])
+    setCommentData(state => ({ ...state, text: comment, parent: { _id: commentId, _type: "comment" } }))
+  }, [type, comment])
 
   const onSubmit = (e) => {
     e.preventDefault();
-    handleSubmit(reqParams);
-    setValueArea('');
+    handleSubmit(commentData);
+    setComment('');
   }
 
   return (
     <>
       {exists ?
-        <form onSubmit={onSubmit} className={cn()} style={type ? {marginLeft: '0px'} : {marginLeft: '40px'}}>
-          <p className={cn('title')}>{title}</p>
+        <form onSubmit={onSubmit} className={cn()}>
+          <span className={cn('title')}>{title}</span>
           <textarea
             className={cn('textarea')}
-            value={valueArea}
-            onChange={e => setValueArea(e.target.value)}
+            value={comment}
+            onChange={e => setComment(e.target.value)}
+            placeholder={placeholder}
           >
-      </textarea>
-          <div className={cn('wrapper')}>
-            <button className={cn('send')} type={'submit'}>Отправить</button>
-            {type ? <button className={cn('cansel')} type={'button'} value={false} onClick={onChangeOpenFormComment}>Отмена</button> : null}
+          </textarea>
+          <div className={cn('buttons')}>
+            <button className={cn('button', 'send')} type={'submit'}>Отправить</button>
+            {type ? <button className={cn('button', 'cansel')} type={'button'} value={false} onClick={onChangeOpenFormComment}>Отмена</button> : null}
           </div>
         </form> :
         null
@@ -48,6 +57,17 @@ Comment.propTypes = {
   exists: PropTypes.bool,
   type: PropTypes.bool,
   onChangeOpenFormComment: PropTypes.func,
+  commentId: PropTypes.string,
+  handleSubmit: PropTypes.func,
+  placeholder: PropTypes.string,
 };
+
+Comment.defaultProps = {
+  label: 'Новый комментарий',
+  type: false,
+  placeholder: 'Текст',
+  handleSubmit: () => {},
+  onChangeOpenFormComment: () => {},
+}
 
 export default memo(CommentForm);

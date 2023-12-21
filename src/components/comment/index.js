@@ -16,7 +16,8 @@ function Comment({
   exists,
   onChangeOpenFormComment,
   openFormComment,
-  handleCommentSubmit }) {
+  handleCommentSubmit
+}) {
   const cn = bem('Comment');
 
   const newDate = new Date(date)
@@ -35,17 +36,17 @@ function Comment({
   }
 
   return (
-    <div style={{ marginLeft: `${level*30}px` }}>
+    <div style={{ marginLeft: `${level * 30}px` }}>
       <div className={cn()}>
         <div className={cn('wrapper')}>
-          <p className={cn('user')}>{user}</p>
-          <p className={cn('date')}>
+          <span className={cn('user')}>{user}</span>
+          <span className={cn('date')}>
             {
               `${commentDate.date} ${commentDate.month} ${commentDate.year} в ${commentDate.hours}:${commentDate.minutes}`
             }
-          </p>
+          </span>
         </div>
-        <p className={cn('text')}>{text}</p>
+        <span className={cn('text')}>{text}</span>
         <button value={id} className={cn('button')} type='button' onClick={onChangeHandler}>Ответить</button>
         {openMessageToLogIn === id ? <MessageToLogIn exists={exists} onClick={onChangeMessageToLogIn} /> : null}
         {openFormComment === id ?
@@ -56,6 +57,7 @@ function Comment({
             onChangeOpenFormComment={onChangeOpenFormComment}
             commentId={id}
             handleSubmit={handleCommentSubmit}
+            placeholder={`Мой ответ для ${user}`}
           />
           : null}
       </div>
@@ -67,11 +69,14 @@ Comment.propTypes = {
   user: PropTypes.string,
   date: PropTypes.string,
   text: PropTypes.string,
-  indent: PropTypes.number,
+  level: PropTypes.number,
   id: PropTypes.string,
+  openMessageToLogIn: PropTypes.string,
   onChangeMessageToLogIn: PropTypes.func,
   exists: PropTypes.bool,
-  openMessageToLogIn: PropTypes.string
+  onChangeOpenFormComment: PropTypes.func,
+  openFormComment: PropTypes.string,
+  handleCommentSubmit: PropTypes.func,
 };
 
 export default memo(Comment);

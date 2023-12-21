@@ -6,7 +6,7 @@ import './style.css';
 
 
 function MessageToLogIn({ exists, type, onClick }) {
-  const cn = bem('CommentLogIn');
+  const cn = bem('MessageToLogIn');
 
   return (
     <>

@@ -8,7 +8,7 @@ function CommentsList({ count, children }) {
 
   return (
     <div className={cn()}>
-      <span className={cn('title')}>{`Коментарии (${count})`}</span>
+      <span className={cn('title')}>{`Комментарии (${count})`}</span>
       {children}
     </div>
   )
