@@ -1,11 +1,11 @@
 import { memo } from "react";
 import PropTypes from 'prop-types';
-import CommentLogIn from "../message-to-log-in";
+import MessageToLogIn from "../message-to-log-in";
 import { cn as bem } from '@bem-react/classname';
 import './style.css';
 import CommentForm from "../comment-form";
 
-function Comment({ user, date, text, indent, id, openMessagetoLogIn, onChangeLogInText, exists, onChangeOpenFormComment, openFormComment, hand2 }) {
+function Comment({ user, date, text, indent, id, openMessageToLogIn, onChangeMessageToLogIn, exists, onChangeOpenFormComment, openFormComment, hand2 }) {
   const cn = bem('Comment');
 
   const newDate = new Date(date)
@@ -19,7 +19,7 @@ function Comment({ user, date, text, indent, id, openMessagetoLogIn, onChangeLog
   }
 
   const onChangeHandler = (e) => {
-    if (!exists) onChangeLogInText(e);
+    if (!exists) onChangeMessageToLogIn(e);
     else if (exists) onChangeOpenFormComment(e);
   }
 
@@ -36,7 +36,7 @@ function Comment({ user, date, text, indent, id, openMessagetoLogIn, onChangeLog
         </div>
         <p className={cn('text')}>{text}</p>
         <button value={id} className={cn('button')} type='button' onClick={onChangeHandler}>Ответить</button>
-        {openMessagetoLogIn === id ? <CommentLogIn exists={exists} onChangeLogInText={onChangeLogInText} /> : null}
+        {openMessageToLogIn === id ? <MessageToLogIn exists={exists} onClick={onChangeMessageToLogIn} /> : null}
         {openFormComment === id ?
           <CommentForm
             title={'Новый ответ'}
@@ -60,7 +60,7 @@ Comment.propTypes = {
   id: PropTypes.string,
   onChangeLogInText: PropTypes.func,
   exists: PropTypes.bool,
-  openMessagetoLogIn: PropTypes.string
+  openMessageToLogIn: PropTypes.string
 };
 
 export default memo(Comment);

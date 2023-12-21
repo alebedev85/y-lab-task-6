@@ -5,7 +5,7 @@ import { generatorCommentsList } from "../../utils/comments-list";
 import Spinner from '../../components/spinner';
 import useInit from '../../hooks/use-init';
 import CommentsList from '../../components/comments-list'
-import MessagetoLogIn from "../../components/message-to-log-in";
+import MessageToLogIn from "../../components/message-to-log-in";
 import useSelector from "../../hooks/use-selector";
 import CommentForm from "../../components/comment-form";
 import { useDispatch as useDispatchRedux, useSelector as useSelectorRedux } from 'react-redux';
@@ -15,7 +15,7 @@ function CommentsLayout({ articleId }) {
 
   const exists = useSelector(state => state.session.exists);
 
-  const [openMessagetoLogIn, setOpenMessagetoLogIn] = useState('false');
+  const [openMessageToLogIn, setOpenMessageToLogIn] = useState('false');
   const [openFormComment, setOpenFormComment] = useState('false');
 
   const dispatch = useDispatchRedux();
@@ -31,8 +31,8 @@ function CommentsLayout({ articleId }) {
 
   // console.log(select.comments);
 
-  const onChangeLogInText = (e) => {
-    setOpenMessagetoLogIn(e.target.value);
+  const onChangeMessageToLogIn = (e) => {
+    setOpenMessageToLogIn(e.target.value);
   }
 
   const onChangeOpenFormComment = (e) => {
@@ -59,8 +59,8 @@ function CommentsLayout({ articleId }) {
             date={item2.dateCreate}
             text={item2.text}
             indent={((i + 1) * 30) + 10}
-            openMessagetoLogIn={openMessagetoLogIn}
-            onChangeLogInText={onChangeLogInText}
+            openMessageToLogIn={openMessageToLogIn}
+            onChangeMessageToLogIn={onChangeMessageToLogIn}
             exists={exists}
             onChangeOpenFormComment={onChangeOpenFormComment}
             openFormComment={openFormComment}
@@ -77,9 +77,9 @@ function CommentsLayout({ articleId }) {
       >
         {commentsList.map(item => item)}
         {
-          openMessagetoLogIn === 'false' ? <MessagetoLogIn
+          openMessageToLogIn === 'false' ? <MessageToLogIn
             exists={exists}
-            type={openMessagetoLogIn} /> : null
+            type={openMessageToLogIn} /> : null
         }
         {
           openFormComment === 'false' ? <CommentForm
