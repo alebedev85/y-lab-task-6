@@ -1,0 +1,30 @@
+.CommentLogIn {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 30px 0 0 40px;
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.CommentLogIn-link {
+  margin: 0;
+  padding: 0;
+  color: #0087E9;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  text-decoration-line: underline;
+}
+
+.CommentLogIn-button {
+  color: #666;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  text-decoration-line: underline;
+  cursor: pointer;
+  border: none;
+  background-color: white;
+}

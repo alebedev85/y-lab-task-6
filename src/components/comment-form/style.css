@@ -1,0 +1,66 @@
+.CommentForm {
+  margin: 0;
+  padding: 0;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 40px;
+}
+
+.CommentForm-title {
+  margin: 0;
+  padding: 0;
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.CommentForm-textarea {
+  margin: 0;
+  padding: 5px;
+  resize: none;
+  width: 90%;
+  height: 80px;
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  border: 1px solid #666;
+  background: #FFF;
+  box-shadow: 0 1px 4px 0 rgba(102, 102, 102, 0.10) inset;
+}
+
+.CommentForm-wrapper {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+}
+
+.CommentForm-send, .CommentForm-cansel {
+  height: 21px;
+  border-radius: 2px;
+  border: 1px solid #767676;
+  background: #EFEFEF;
+  color: #000;
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.CommentForm-send {
+  width: 90px;
+}
+
+.CommentForm-cansel {
+  width: 67px;
+}
+
+.CommentForm-send:hover, .CommentForm-cansel:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+}
