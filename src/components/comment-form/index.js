@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
-function CommentForm({title, exists, type = false, onChangeOpenFormComment, commentId, hand}) {
+function CommentForm({title, exists, type = false, onChangeOpenFormComment, commentId, handleSubmit}) {
 
   const cn = bem('CommentForm');
 
@@ -15,16 +15,16 @@ function CommentForm({title, exists, type = false, onChangeOpenFormComment, comm
     setReqParams(state => ({...state, text: valueArea, parent: {_id: commentId, _type: "comment"}}))
   }, [type, valueArea])
 
-  const postData = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    hand(reqParams);
+    handleSubmit(reqParams);
     setValueArea('');
   }
 
   return (
     <>
       {exists ?
-        <form onSubmit={postData} className={cn()} style={type ? {marginLeft: '0px'} : {marginLeft: '40px'}}>
+        <form onSubmit={onSubmit} className={cn()} style={type ? {marginLeft: '0px'} : {marginLeft: '40px'}}>
           <p className={cn('title')}>{title}</p>
           <textarea
             className={cn('textarea')}

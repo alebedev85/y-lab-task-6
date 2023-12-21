@@ -5,7 +5,18 @@ import { cn as bem } from '@bem-react/classname';
 import './style.css';
 import CommentForm from "../comment-form";
 
-function Comment({ user, date, text, indent, id, openMessageToLogIn, onChangeMessageToLogIn, exists, onChangeOpenFormComment, openFormComment, hand2 }) {
+function Comment({
+  user,
+  date,
+  text,
+  level,
+  id,
+  openMessageToLogIn,
+  onChangeMessageToLogIn,
+  exists,
+  onChangeOpenFormComment,
+  openFormComment,
+  handleCommentSubmit }) {
   const cn = bem('Comment');
 
   const newDate = new Date(date)
@@ -24,7 +35,7 @@ function Comment({ user, date, text, indent, id, openMessageToLogIn, onChangeMes
   }
 
   return (
-    <div style={{ marginLeft: `${indent}px` }}>
+    <div style={{ marginLeft: `${level*30}px` }}>
       <div className={cn()}>
         <div className={cn('wrapper')}>
           <p className={cn('user')}>{user}</p>
@@ -40,11 +51,11 @@ function Comment({ user, date, text, indent, id, openMessageToLogIn, onChangeMes
         {openFormComment === id ?
           <CommentForm
             title={'Новый ответ'}
-            exists={exists} indent={indent}
+            exists={exists}
             type={true}
             onChangeOpenFormComment={onChangeOpenFormComment}
             commentId={id}
-            hand={hand2}
+            handleSubmit={handleCommentSubmit}
           />
           : null}
       </div>
@@ -58,7 +69,7 @@ Comment.propTypes = {
   text: PropTypes.string,
   indent: PropTypes.number,
   id: PropTypes.string,
-  onChangeLogInText: PropTypes.func,
+  onChangeMessageToLogIn: PropTypes.func,
   exists: PropTypes.bool,
   openMessageToLogIn: PropTypes.string
 };

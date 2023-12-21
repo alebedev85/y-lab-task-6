@@ -1,7 +1,8 @@
 import { memo, useState } from "react";
 import PropTypes from 'prop-types';
 import Comment from "../../components/comment";
-import { generatorCommentsList } from "../../utils/comments-list";
+import listToTree from "../../utils/list-to-tree";
+import treeToList from "../../utils/tree-to-list";
 import Spinner from '../../components/spinner';
 import useInit from '../../hooks/use-init';
 import CommentsList from '../../components/comments-list'
@@ -13,10 +14,10 @@ import commentsActions from "../../store-redux/comments/actions";
 
 function CommentsLayout({ articleId }) {
 
-  const exists = useSelector(state => state.session.exists);
-
   const [openMessageToLogIn, setOpenMessageToLogIn] = useState('false');
   const [openFormComment, setOpenFormComment] = useState('false');
+
+  const exists = useSelector(state => state.session.exists);
 
   const dispatch = useDispatchRedux();
 
@@ -29,8 +30,6 @@ function CommentsLayout({ articleId }) {
     waiting: state.comments.waiting,
   }));
 
-  // console.log(select.comments);
-
   const onChangeMessageToLogIn = (e) => {
     setOpenMessageToLogIn(e.target.value);
   }
@@ -39,7 +38,7 @@ function CommentsLayout({ articleId }) {
     setOpenFormComment(e.target.value);
   }
 
-  const postFormComment = (data) => {
+  const handleCommentSubmit = (data) => {
     if (!data.parent._id) {
       dispatch(commentsActions.postComments({ ...data, parent: { _id: articleId, _type: "article" } }, select.profile))
     } else {
@@ -48,34 +47,36 @@ function CommentsLayout({ articleId }) {
     }
   }
 
-  const commentsList = generatorCommentsList(select.comments, articleId)
-    .map(item => {
-      return item.map((item2, i) => {
-        return (
-          <Comment
-            key={item2._id}
-            id={item2._id}
-            user={item2.author.profile.name}
-            date={item2.dateCreate}
-            text={item2.text}
-            indent={((i + 1) * 30) + 10}
-            openMessageToLogIn={openMessageToLogIn}
-            onChangeMessageToLogIn={onChangeMessageToLogIn}
-            exists={exists}
-            onChangeOpenFormComment={onChangeOpenFormComment}
-            openFormComment={openFormComment}
-            hand2={postFormComment}
-          />
-        )
-      })
-    }).flatMap(item => item)
+  const commentsList = treeToList(listToTree(select.comments), (item, level) => ({
+    _id: item._id,
+    text: item.text,
+    dateCreate: item.dateCreate,
+    author: item.author,
+    parent: item.parent,
+    isDeleted: item.isDeleted,
+    level: level - 1,
+  })).slice(1)
 
   return (
     <Spinner active={select.waiting}>
       <CommentsList
         count={select.comments.length}
       >
-        {commentsList.map(item => item)}
+        {commentsList.map((comment) =>
+          <Comment
+            key={comment._id}
+            id={comment._id}
+            user={comment.author.profile.name}
+            date={comment.dateCreate}
+            text={comment.text}
+            level={comment.level}
+            openMessageToLogIn={openMessageToLogIn}
+            onChangeMessageToLogIn={onChangeMessageToLogIn}
+            exists={exists}
+            onChangeOpenFormComment={onChangeOpenFormComment}
+            openFormComment={openFormComment}
+            handleCommentSubmit={handleCommentSubmit}
+          />)}
         {
           openMessageToLogIn === 'false' ? <MessageToLogIn
             exists={exists}
@@ -84,7 +85,7 @@ function CommentsLayout({ articleId }) {
         {
           openFormComment === 'false' ? <CommentForm
             exists={exists}
-            title={'Новый комментарий'} hand={postFormComment} /> : null
+            title={'Новый комментарий'} hand={handleCommentSubmit} /> : null
         }
       </CommentsList>
     </Spinner>
