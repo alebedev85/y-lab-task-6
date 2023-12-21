@@ -48,19 +48,20 @@ function Comment({
         </div>
         <span className={cn('text')}>{text}</span>
         <button value={id} className={cn('button')} type='button' onClick={onChangeHandler}>Ответить</button>
-        {openMessageToLogIn === id ? <MessageToLogIn exists={exists} onClick={onChangeMessageToLogIn} /> : null}
-        {openFormComment === id ?
-          <CommentForm
-            title={'Новый ответ'}
-            exists={exists}
-            type={true}
-            onChangeOpenFormComment={onChangeOpenFormComment}
-            commentId={id}
-            handleSubmit={handleCommentSubmit}
-            placeholder={`Мой ответ для ${user}`}
-          />
-          : null}
       </div>
+      {openMessageToLogIn === id ? <MessageToLogIn exists={exists} onClick={onChangeMessageToLogIn} /> : null}
+      {openFormComment === id ?
+        <CommentForm
+          title={'Новый ответ'}
+          exists={exists}
+          type={true}
+          onChangeOpenFormComment={onChangeOpenFormComment}
+          commentId={id}
+          handleSubmit={handleCommentSubmit}
+          placeholder={`Мой ответ для ${user}`}
+        />
+        : null}
+
     </div>
   )
 }
