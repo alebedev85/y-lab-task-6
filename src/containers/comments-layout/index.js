@@ -85,7 +85,7 @@ function CommentsLayout({ articleId }) {
         {
           openFormComment === 'false' ? <CommentForm
             exists={exists}
-            title={'Новый комментарий'} hand={handleCommentSubmit} /> : null
+            title={'Новый комментарий'} handleSubmit={handleCommentSubmit} /> : null
         }
       </CommentsList>
     </Spinner>
